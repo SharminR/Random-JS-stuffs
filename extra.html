@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <!--First task-->
+    <h3>Input text and I will return it backwards!</h3>
+    <input type="text" id="user-input" value="">
+    <button onclick ="textBackwards()">Backwardify!</button>
+    <p id = "result"></p>
+
+
+    <!--Second task-->
+    <h3>Press this button to check if it is palindrome or not!</h3>
+    <button onclick="palindrome()">Palindrome?</button>
+    <p id ="palindrome"></p>
+
+
+    <!--Third task-->
+    <h3>Let's play a number guessing game!</h3>
+    <p>Guess a number I'm thinking between 1 and 10</p>
+    <input type="number" id="user-number" value="1" min ="1" max = "10" style="width:4%">
+    <button onclick="numberGame()">Guess</button>
+    <p id = "number-result"></p>
+
+
+    <script type="text/javascript">
+
+      //First task
+      function textBackwards(){
+        var text = document.getElementById("user-input").value; //Get the user input
+        var backwardsText = backwards(text); //Send the user input to function that will transform it
+        document.getElementById("result").innerHTML = backwardsText; //Display the result
+      }
+
+      function backwards(text){
+        var textArray = text.split(""); //Will split the text string into array, "cat" => ["c", "a", "t"]
+                                        //text.split will actually split the text variable to an array as well so textArray variable is redundant. Let's use it for the sake of clarity.
+        var backwardsArray = []; //New empty array.
+        var lastIndex = textArray.length - 1; //The final index of textArray (the final character of the word).
+
+        for (let i = 0; i < textArray.length; i++){
+          backwardsArray[i] = textArray[lastIndex]; //In the first loop backwardsArray[0] = textArray[2] ("t"), second backwardsArray[1] = textArray[1] ("a"), finally backwardsArray[2] = textArray[0] ("c")
+          lastIndex--; //To go backwards in the textArray
+        }
+        //backwardsArray is now ["t", "a", "c"]
+
+        var backwardsText = backwardsArray.join(""); //Let's transform it back to text from array
+        return backwardsText;
+      }
+
+
+      /*Second task. This task is easy because we can simply reuse our function
+        that makes the text backwards*/
+      function palindrome(){
+        var text = document.getElementById("user-input").value; //Get the user input
+
+        if(text == backwards(text)){    //Check if the text is same backwards
+          document.getElementById("palindrome").innerHTML = "The word is a palindrome."
+        }
+        else {  //If not, program goes here.
+          document.getElementById("palindrome").innerHTML = "The word is not a palindrome."
+        }
+      }
+
+
+      //Third task
+      function numberGame(){
+
+        var number = randomNumber(10);  //Randomize a number for the computer
+        var userNumber = document.getElementById("user-number").value; //Get user input
+        if(number == userNumber){
+          document.getElementById("number-result").innerHTML = "Correct! Great job!"
+        }
+        else{
+          document.getElementById("number-result").innerHTML = "Nope, try again. I was thinking of number " + number;
+        }
+      }
+
+
+
+      /*I create a function that can be easily reused later; Function accepts a number and returns
+        a random number between 1 and that number.*/
+      function randomNumber(maxValue){
+        return Math.floor((Math.random() * maxValue) + 1);
+      }
+
+    </script>
+  </body>
+</html>
